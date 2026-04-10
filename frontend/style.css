@@ -2855,11 +2855,11 @@ img {
   left: 0;
   width: 100%;
   background: var(--white);
-  padding: 10px 16px;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, .1);
+  padding: 12px 16px;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, .15);
   display: flex;
-  gap: 10px;
-  z-index: 1000;
+  gap: 12px;
+  z-index: 9999; /* Ensure it's above EVERYTHING */
 }
 
 @media (min-width: 1025px) {
@@ -2869,37 +2869,41 @@ img {
 }
 
 .pdp-btn-call {
-  width: 44px;
-  height: 44px;
-  border: 1px solid var(--border);
-  border-radius: 4px;
+  width: 48px;
+  height: 48px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--primary);
   background: #fff;
   flex-shrink: 0;
+  font-size: 1.1rem;
 }
 
 .pdp-btn-buy {
   flex: 1;
-  background: var(--primary);
+  background: var(--primary); /* Emerald Green */
   color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   font-weight: 700;
-  font-size: .88rem;
-  height: 44px;
+  font-size: 1rem;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
   cursor: pointer;
-  transition: background .2s;
+  transition: all .2s ease;
+  box-shadow: 0 4px 6px rgba(22, 163, 74, 0.2);
 }
 
 .pdp-btn-buy:hover {
-  background: #e55a00;
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 12px rgba(22, 163, 74, 0.3);
 }
 
 /* Product Section Tabs */
