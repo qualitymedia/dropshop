@@ -4,15 +4,23 @@ const { protect, admin } = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
-// @desc    Get all products from database
+const fs = require('fs');
+const path = require('path');
+
+// @desc    Get all products from database (Now using JSON file as per request)
 // @route   GET /api/products
 // @access  Public
 router.get('/', async (req, res) => {
     try {
-        const products = await Product.find({});
+        const filePath = path.join(__dirname, '../data/products.json');
+        const jsonData = fs.readFileSync(filePath, 'utf-8');
+        const products = JSON.parse(jsonData);
+        
+        // Return JSON products
         res.json(products);
     } catch (e) {
-        res.status(500).json({ error: 'Failed to load products' });
+        console.error('Failed to load JSON products:', e);
+        res.status(500).json({ error: 'Failed to load products from JSON' });
     }
 });
 

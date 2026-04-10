@@ -117,6 +117,24 @@
     "warranty": "12 Months Manufacturer Warranty",
     "weight": "0.35kg",
     "color": "Techno Black",
-    "inTheBox": "Digital Microscope, Metal Stand, User Manual"
+,
+  {
+    "id": "prod-premium-watch",
+    "name": "Elite Noir — Premium Designer Leather Watch",
+    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80",
+    "originalPrice": "350.00",
+    "price": "249.00",
+    "discount": 29,
+    "rating": 5.0,
+    "reviews": 12,
+    "storeName": "Vogue Elite Official",
+    "warranty": "24 Months International Warranty",
+    "weight": "0.15kg",
+    "color": "Midnight Black",
+    "inTheBox": "Elite Noir Watch, Luxury Leather Case, Warranty Card, Cleaning Cloth",
+    "images": [
+      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800",
+      "https://images.unsplash.com/photo-1508685096489-7aac29bca5b4?w=800"
+    ]
   }
 ]
