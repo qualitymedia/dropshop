@@ -1,0 +1,9 @@
+{
+  "name": "dropshop",
+  "version": "1.0.0",
+  "description": "DropShop E-Commerce Monorepo Helper",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "node backend/server.js"
+  }
+}
