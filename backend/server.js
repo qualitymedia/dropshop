@@ -21,9 +21,11 @@ app.use(helmet({
         directives: {
             defaultSrc: ["'self'"],
             scriptSrc: ["'self'", "'unsafe-inline'", "https://js.paystack.co", "https://cdnjs.cloudflare.com"],
-            styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdnjs.cloudflare.com"],
-            imgSrc: ["'self'", "data:", "https://images.unsplash.com", "https://via.placeholder.com", "https://plus.unsplash.com"],
+            scriptSrcAttr: ["'unsafe-inline'"], // Crucial for onclick handlers
+            styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://paystack.com", "https://cdnjs.cloudflare.com"],
+            imgSrc: ["'self'", "data:", "https://images.unsplash.com", "https://via.placeholder.com", "https://plus.unsplash.com", "https://images.pexels.com"],
             fontSrc: ["'self'", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com"],
+            frameSrc: ["'self'", "https://checkout.paystack.co", "https://js.paystack.co"], // For Paystack Popup
             connectSrc: ["'self'"],
         },
     },
