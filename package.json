@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "DropShop E-Commerce Monorepo Helper",
   "scripts": {
+    "build": "npm install --prefix backend",
+    "preinstall": "npm install --prefix backend",
     "start": "node backend/server.js",
     "dev": "node backend/server.js"
   }
