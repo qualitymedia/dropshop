@@ -792,8 +792,8 @@ window.renderCartPage = () => {
 // ---- Checkout State ---- //
 window.checkoutStep = 1;
 window.checkoutData = {
-    shipping: { firstName: '', lastName: '', address: '', city: '', phone: '', email: '' },
-    paymentMethod: 'paystack'
+    shipping: { firstName: '', lastName: '', address: '', city: '', phone: '', email: '', country: 'Nigeria' },
+    paymentMethod: 'online'
 };
 
 window.renderCheckoutPage = () => {
@@ -846,9 +846,20 @@ window.renderCheckoutPage = () => {
                                 <input type="text" id="ship-last" value="${window.checkoutData.shipping.lastName}" required style="width:100%; padding:11px; border:1.5px solid #e2e8f0; border-radius:8px; outline:none;">
                             </div>
                         </div>
-                        <div style="margin-bottom:15px;">
-                            <label style="display:block; font-size:.8rem; margin-bottom:5px; font-weight:600;">Email Address</label>
-                            <input type="email" id="ship-email" value="${window.checkoutData.shipping.email || ''}" required placeholder="For order updates" style="width:100%; padding:11px; border:1.5px solid #e2e8f0; border-radius:8px; outline:none;">
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:15px;">
+                            <div>
+                                <label style="display:block; font-size:.8rem; margin-bottom:5px; font-weight:600;">Email Address</label>
+                                <input type="email" id="ship-email" value="${window.checkoutData.shipping.email || ''}" required placeholder="For order updates" style="width:100%; padding:11px; border:1.5px solid #e2e8f0; border-radius:8px; outline:none;">
+                            </div>
+                            <div>
+                                <label style="display:block; font-size:.8rem; margin-bottom:5px; font-weight:600;">Country</label>
+                                <select id="ship-country" required style="width:100%; padding:11px; border:1.5px solid #e2e8f0; border-radius:8px; outline:none; background:#fff; -webkit-appearance:none; font-family:inherit;">
+                                    <option value="Nigeria" ${window.checkoutData.shipping.country === 'Nigeria' ? 'selected' : ''}>Nigeria</option>
+                                    <option value="United Kingdom" ${window.checkoutData.shipping.country === 'United Kingdom' ? 'selected' : ''}>United Kingdom</option>
+                                    <option value="United States" ${window.checkoutData.shipping.country === 'United States' ? 'selected' : ''}>United States</option>
+                                    <option value="Ghana" ${window.checkoutData.shipping.country === 'Ghana' ? 'selected' : ''}>Ghana</option>
+                                </select>
+                            </div>
                         </div>
                         <div style="margin-bottom:15px;">
                             <label style="display:block; font-size:.8rem; margin-bottom:5px; font-weight:600;">Full Address</label>
@@ -901,14 +912,17 @@ window.renderCheckoutPage = () => {
                     </div>
 
                     <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:30px;">
-                        <!-- Paystack Option -->
-                        <label class="payment-option" style="display:flex; align-items:center; gap:15px; padding:18px; border:2px solid ${window.checkoutData.paymentMethod === 'paystack' ? 'var(--primary)' : '#f1f5f9'}; border-radius:12px; cursor:pointer; transition:all .2s; background:${window.checkoutData.paymentMethod === 'paystack' ? '#f0fdf4' : '#fff'};">
-                            <input type="radio" name="payMethod" value="paystack" ${window.checkoutData.paymentMethod === 'paystack' ? 'checked' : ''} onchange="window.checkoutData.paymentMethod='paystack'; window.renderCheckoutPage();" style="accent-color:var(--primary); width:18px; height:18px;">
+                        <!-- Dynamic Gateway Option -->
+                        <label class="payment-option" style="display:flex; align-items:center; gap:15px; padding:18px; border:2px solid ${window.checkoutData.paymentMethod === 'online' ? 'var(--primary)' : '#f1f5f9'}; border-radius:12px; cursor:pointer; transition:all .2s; background:${window.checkoutData.paymentMethod === 'online' ? '#f0fdf4' : '#fff'};">
+                            <input type="radio" name="payMethod" value="online" ${window.checkoutData.paymentMethod === 'online' ? 'checked' : ''} onchange="window.checkoutData.paymentMethod='online'; window.renderCheckoutPage();" style="accent-color:var(--primary); width:18px; height:18px;">
                             <div style="flex:1;">
-                                <div style="font-weight:700; font-size:.95rem; display:flex; align-items:center; gap:8px;">Card / Bank / USSD <span style="font-size:.65rem; background:#2563eb; color:#fff; padding:2px 6px; border-radius:4px;">Secure by Paystack</span></div>
+                                <div style="font-weight:700; font-size:.95rem; display:flex; align-items:center; gap:8px;">
+                                    ${window.checkoutData.shipping.country === 'Nigeria' ? 'Card / Bank / USSD' : 'Credit & Debit Cards'} 
+                                    <span style="font-size:.65rem; background:#2563eb; color:#fff; padding:2px 6px; border-radius:4px;">Secure by ${window.checkoutData.shipping.country === 'Nigeria' ? 'Paystack' : 'Stripe'}</span>
+                                </div>
                                 <div style="font-size:.75rem; color:#64748b; margin-top:2px;">Fast and secure payment with your local or international card.</div>
                             </div>
-                            <i class="fa-solid fa-credit-card" style="font-size:1.4rem; color:#64748b;"></i>
+                            <i class="fa-brands ${window.checkoutData.shipping.country === 'Nigeria' ? 'fa-cc-visa' : 'fa-cc-stripe'}" style="font-size:1.4rem; color:#64748b;"></i>
                         </label>
 
                         <!-- COD Option -->
@@ -930,7 +944,7 @@ window.renderCheckoutPage = () => {
                     </div>
 
                     <button onclick="window._processOrder()" id="payBtn" class="btn btn-primary" style="width:100%; justify-content:center; padding:15px; font-size:1.1rem; border-radius:10px;">
-                        ${window.checkoutData.paymentMethod === 'paystack' ? 'PAY NOW - $' + total : 'CONFIRM ORDER'}
+                        ${window.checkoutData.paymentMethod === 'online' ? 'PAY NOW - $' + total : 'CONFIRM ORDER'}
                     </button>
                     <p style="text-align:center; font-size:.7rem; color:#94a3b8; margin-top:12px;"><i class="fa-solid fa-lock"></i> SSL Secured Payment Encryption</p>
                 </div>
@@ -968,6 +982,7 @@ window._goToPayment = () => {
         firstName: document.getElementById('ship-first').value,
         lastName:  document.getElementById('ship-last').value,
         email:     document.getElementById('ship-email').value,
+        country:   document.getElementById('ship-country').value,
         address:   document.getElementById('ship-addr').value,
         city:      document.getElementById('ship-city').value,
         phone:     document.getElementById('ship-phone').value,
@@ -981,8 +996,15 @@ window._processOrder = async () => {
     payBtn.disabled = true;
     payBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
 
-    if (window.checkoutData.paymentMethod === 'paystack') {
-        window._initPaystack();
+    if (window.checkoutData.paymentMethod === 'online') {
+        if (window.checkoutData.shipping.country === 'Nigeria') {
+            window._initPaystack();
+        } else {
+            // Placeholder for Stripe logic
+            Cart.showToast("Stripe Integration Coming Soon for " + window.checkoutData.shipping.country + "!");
+            payBtn.disabled = false;
+            payBtn.innerHTML = 'PAY NOW - $' + Cart.total();
+        }
     } else {
         // COD path
         const orderId = await window._createOrderInBackend(false);

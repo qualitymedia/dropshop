@@ -161,14 +161,16 @@ export const Account = {
                 } catch(err) { showError(err.message); btn.textContent = origText; }
             };
 
-            fReg.onsubmit = async (e) => {
+             fReg.onsubmit = async (e) => {
                 e.preventDefault();
                 const btn = fReg.querySelector('button'); 
                 const origText = btn.textContent;
                 btn.textContent = 'Creating Account...';
                 try {
                     await Auth.register(document.getElementById('regName').value, document.getElementById('regEmail').value, document.getElementById('regPass').value);
-                    window.location.reload();
+                    const { Cart } = await import('./Cart.js');
+                    Cart.showToast("Account created successfully! Welcome.");
+                    setTimeout(() => window.location.reload(), 1500);
                 } catch(err) { showError(err.message); btn.textContent = origText; }
             };
         }
