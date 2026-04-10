@@ -16,14 +16,25 @@ const PORT = process.env.PORT || 3000;
 app.set('trust proxy', 1); // Trust Render's proxy for Rate Limiting
 
 // ── Security Middleware ──────────────────────────────────────────────────────
-app.use(helmet()); // Sets secure HTTP headers
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ["'self'"],
+            scriptSrc: ["'self'", "'unsafe-inline'", "https://js.paystack.co", "https://cdnjs.cloudflare.com"],
+            styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdnjs.cloudflare.com"],
+            imgSrc: ["'self'", "data:", "https://images.unsplash.com", "https://via.placeholder.com", "https://plus.unsplash.com"],
+            fontSrc: ["'self'", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com"],
+            connectSrc: ["'self'"],
+        },
+    },
+}));
 app.use(mongoSanitize()); // Prevent NoSQL injection
 app.use(hpp()); // Prevent HTTP Parameter Pollution
 
 // Rate Limiting
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // Limit each IP to 100 requests per window
+    max: 500, // Increased threshold for smoother browsing
     standardHeaders: true,
     legacyHeaders: false,
     message: 'Too many requests from this IP, please try again later.'
