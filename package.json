@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "DropShop E-Commerce Monorepo Helper",
   "scripts": {
-    "start": "node backend/server.js",
-    "dev": "node backend/server.js"
+    "start": "cd backend && node server.js",
+    "dev": "cd backend && node server.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
